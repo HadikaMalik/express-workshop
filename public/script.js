@@ -4,7 +4,7 @@ if (document.readyState !== 'loading') {
     document.addEventListener('DOMContentLoaded', ready);
 }
 
-function ready () {
+function ready() {
     getBlogposts('/get-posts');
 
     // send posts to server
@@ -22,48 +22,49 @@ function ready () {
 /****
  * Function definitions
  ***/
-function postBlogposts (url, data) {
+function postBlogposts(url, data) {
     fetch(url, {
         method: 'POST',
         body: data
     })
-    .then(function (res) {
-        res.json()
-            .then(function (json) {
-                console.log(json);
-                addBlogpostsToPage(json);
-                document.querySelector('form').reset();
+        .then(function (res) {
+            res.json()
+                .then(function (json) {
+                    console.log(json);
+                    addBlogpostsToPage(json);
+                    document.querySelector('form').reset();
+                })
         })
-    })
-    .catch(function (err) {
-        console.error(err)
-    });
+        .catch(function (err) {
+            console.error(err)
+        });
 }
 
-function getBlogposts (url) {
+function getBlogposts(url) {
     fetch(url, {
         method: 'GET'
     })
-    .then(function (res) {
-        res.json()
-        .then(function (json) {
-            console.log(json);
-            addBlogpostsToPage(json);
+        .then(function (res) {
+            res.json()
+                .then(function (json) {
+                    console.log(json);
+                    addBlogpostsToPage(json);
+                });
+        })
+        .catch(function (err) {
+            console.error(err)
         });
-    })
-    .catch(function (err) {
-        console.error(err)
-    });
 }
 
-function addBlogpostsToPage (data) {
+function addBlogpostsToPage(data) {
+    var postContainer = document.querySelector('.post-container');
+    postContainer.innerHTML = ""
     for (var blogpost in data) {
         if (data.hasOwnProperty(blogpost)) {
 
-            var postDiv         = document.createElement('div');
-            var postText        = document.createElement('p');
-            var thumbnail       = document.createElement('img');
-            var postContainer   = document.querySelector('.post-container');
+            var postDiv = document.createElement('div');
+            var postText = document.createElement('p');
+            var thumbnail = document.createElement('img');
 
             thumbnail.src = "./img/logo2.png";
             thumbnail.className = "thumbnail";
